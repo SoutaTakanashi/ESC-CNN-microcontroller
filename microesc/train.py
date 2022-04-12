@@ -11,7 +11,8 @@ import csv
 
 import pandas
 import numpy
-import keras
+#import keras
+from tensorflow import keras 
 import librosa
 import sklearn.metrics
 
@@ -200,12 +201,20 @@ def parse(args):
 
 def setup_keras():
     import tensorflow as tf
-    from keras.backend import tensorflow_backend as B
+    #from keras.backend import tensorflow_backend as B
+    #from keras.backend import set_session
+    # allow_growth is needed to avoid CUDNN_STATUS_INTERNAL_ERROR on some convolutional layers
+    #session_config = tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))
+    #sess = tf.Session(config=session_config)
+    #B.set_session(sess)
+    from tensorflow.compat.v1.keras import backend as K
 
     # allow_growth is needed to avoid CUDNN_STATUS_INTERNAL_ERROR on some convolutional layers
-    session_config = tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))
-    sess = tf.Session(config=session_config)
-    B.set_session(sess)
+    #session_config = tf.ConfigProto(gpu_options=tf.GPUOptions(allow_growth=True))
+    session_config = tf.compat.v1.ConfigProto(gpu_options=tf.compat.v1.GPUOptions(allow_growth=True))
+    sess = tf.compat.v1.Session(config=session_config)
+    #B.set_session(sess)
+    K.set_session(sess)
 
 def load_training_data(data, fold):
     assert fold >= 1 # should be 1 indexed

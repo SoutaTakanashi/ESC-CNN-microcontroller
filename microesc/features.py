@@ -9,7 +9,8 @@ import collections
 
 import pandas
 import numpy
-import keras
+#import keras
+from tensorflow import keras
 import librosa
 
 from . import urbansound8k

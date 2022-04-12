@@ -32,6 +32,6 @@ def add_arguments(parser):
 
 def load_settings_path(path):
     with open(path, 'r') as config_file:
-        settings = yaml.load(config_file.read())    
+        settings = yaml.safe_load(config_file.read())    
    
     return settings
